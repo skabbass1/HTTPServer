@@ -35,11 +35,13 @@ import HTTPServerCore
 
 class RequestParserSpec: QuickSpec {
     override func spec() {
-        it("Throws error when request text is empty") {
-            
+        it("Throws empty request error when request text is empty") {
             let rawRequest = String()
             expect {try RequestParser.parse(rawRequest: rawRequest)}.to(throwError(RequestParsingError.emptyRequest))
-        
+        }
+        it("Throws bad request syntax error for malformed request line"){
+            let rawRequest = "GET "
+            expect {try RequestParser.parse(rawRequest: rawRequest)}.to(throwError(RequestParsingError.badRequestSyntax))
         }
     }
 }
