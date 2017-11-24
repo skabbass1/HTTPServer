@@ -1,5 +1,6 @@
 import HTTPServerCore
 
-let parser = RequestParser()
 
-print("Hello, world!")
+
+
+print("Hello, world! ")

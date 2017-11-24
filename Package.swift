@@ -19,6 +19,9 @@ let package = Package(
         .target(
             name: "HTTPServerCore",
             dependencies: []),
+        .testTarget(
+            name: "HTTPServerCoreTests",
+            dependencies: ["HTTPServerCore", "Quick", "Nimble"]),
     ]
 )
 
