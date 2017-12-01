@@ -16,7 +16,6 @@ public enum RequestParsingError: Error {
 public final class RequestParser {
     
     public static func  parse(rawRequest text: String) throws -> Request {
-        
         guard !text.isEmpty else {
             throw RequestParsingError.emptyRequest
         }
@@ -37,12 +36,10 @@ public final class RequestParser {
     }
     
     static func parseResourceLine(line: String) throws -> (method: String, resource: String, version:String?) {
-        
         let words = line.components(separatedBy: " ").filter {$0 != ""}
         guard (words.count >= 2 && words.count <= 3) else {
             throw RequestParsingError.badRequestSyntax
         }
-        
         return (
             method: words[0],
             resource: words[1],

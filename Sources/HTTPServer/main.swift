@@ -1,6 +1,8 @@
 import HTTPServerCore
 
+import Foundation
+
+let fileManager = FileManager()
 
 
-
-print("Hello, world! ")
+print(fileManager.currentDirectoryPath)

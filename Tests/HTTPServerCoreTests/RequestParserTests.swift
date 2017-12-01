@@ -10,7 +10,6 @@ import Quick
 import Nimble
 import HTTPServerCore
 
-
 class RequestParserSpec: QuickSpec {
     override func spec() {
         it("Throws empty request error when request text is empty") {
