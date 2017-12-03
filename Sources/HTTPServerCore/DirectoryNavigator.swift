@@ -28,7 +28,27 @@ public  final class DirectoryNavigator {
         catch  _ as NSError {
             throw DirectoryNavigatorError.pathDoesNotExist
         }
-        
     }
     
+    public func fileExists(atPath: String) -> Bool {
+        return  self.fileManager.fileExists(atPath: atPath)
+    }
+    
+    public func fileType(atPath: String) throws -> String {
+        guard  fileExists(atPath: atPath) else {
+            throw DirectoryNavigatorError.pathDoesNotExist
+        }
+         return try fileManager.attributesOfItem(atPath: atPath)[FileAttributeKey("NSFileType")] as! String
+    
+    }
+    
+    public func readFileContents(atPath: String) throws -> Data? {
+        guard  fileExists(atPath: atPath) else {
+            throw DirectoryNavigatorError.pathDoesNotExist
+        }
+    
+        let file: FileHandle? = FileHandle(forReadingAtPath: atPath)
+        return file?.readDataToEndOfFile()
+        
+    }
 }
