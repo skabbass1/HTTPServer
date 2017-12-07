@@ -9,6 +9,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/Quick/Quick.git", from: "1.2.0"),
         .package(url: "https://github.com/Quick/Nimble.git", from: "7.0.3"),
+        .package(url: "https://github.com/IBM-Swift/BlueSocket.git", from: "0.12.78"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -18,7 +19,7 @@ let package = Package(
             dependencies: ["HTTPServerCore"]),
         .target(
             name: "HTTPServerCore",
-            dependencies: []),
+            dependencies: ["Socket"]),
         .testTarget(
             name: "HTTPServerCoreTests",
             dependencies: ["HTTPServerCore", "Quick", "Nimble"]),
