@@ -25,7 +25,7 @@ public  final class DirectoryNavigator {
         do {
             return try self.fileManager.contentsOfDirectory(atPath: "\(root)\(atPath)")
         }
-        catch  _ as NSError {
+        catch  {
             throw DirectoryNavigatorError.pathDoesNotExist
         }
     }

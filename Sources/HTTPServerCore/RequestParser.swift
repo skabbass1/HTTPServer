@@ -49,10 +49,7 @@ public final class RequestParser {
     
     static func parseRequestHeaders(lines: [String]) -> [String: String] {
         var headers = [String: String]()
-        for line in lines {
-            if (line.isEmpty){
-                break
-            }
+        for line in lines where line != "" {            
             let keyValue = line.split(separator: ":", maxSplits: 1).map{$0.trimmingCharacters(in: .whitespaces)}
             headers[keyValue[0]] = keyValue[1]
         }
