@@ -7,5 +7,5 @@ import HTTPServerCore
 
 let nav = DirectoryNavigator()
 
-let files = try nav.listFilesAndFileTypes(atPath: "/Sources")
+let files = try nav.listFilesAndFileTypes(atPath: "/README.md")
 print(files)

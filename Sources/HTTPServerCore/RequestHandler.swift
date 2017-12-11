@@ -26,12 +26,30 @@ public final class RequestHandler {
         }
     }
 
-    func handleGet(request: Request) -> Response{
-        //resources = self.directoryNavigator.
+    func handleGet(request: Request) -> Response {
+
+        let resourceResolvers = [
+            self.tryFetchDirectory,
+            self.tryFetchFile,
+        ]
+
         return Response()
     }
 
     func handlePost(request: Request) -> Response {
         return Response()
     }
+
+    func tryFetchDirectory(atPath: String) -> Response? {
+        return nil
+    }
+
+    func tryFetchFile(atPath: String) -> Response? {
+        return nil
+    }
+
+    func resourceNotFound() -> Response {
+        return Response()
+    }
+
 }
