@@ -14,14 +14,18 @@ class RequestParserSpec: QuickSpec {
     override func spec() {
         it("Throws empty request error when request text is empty") {
             let rawRequest = String()
-            expect {try RequestParser.parse(rawRequest: rawRequest)}.to(throwError(RequestParsingError.emptyRequest))
+            expect {
+                try RequestParser.parse(rawRequest: rawRequest)
+            }.to(throwError(RequestParsingError.emptyRequest))
         }
-        
-        it("Throws bad request syntax error for malformed request line"){
+
+        it("Throws bad request syntax error for malformed request line") {
             let rawRequest = "GET "
-            expect {try RequestParser.parse(rawRequest: rawRequest)}.to(throwError(RequestParsingError.badRequestSyntax))
+            expect {
+                try RequestParser.parse(rawRequest: rawRequest)
+            }.to(throwError(RequestParsingError.badRequestSyntax))
         }
-        
+
         it("Parses valid GET request correctly") {
             let rawRequest = """
                 GET /Tests/ HTTP/1.1
@@ -32,26 +36,25 @@ class RequestParserSpec: QuickSpec {
                 Accept-Encoding: gzip, deflate, br
 
             """
-            
+
             let expected = Request(
-                method: "GET",
-                resource: "/Tests/",
-                httpVersion: Optional("HTTP/1.1"),
-                headers: [
-                    "Host": "localhost:8000",
-                    "Accept": "text/html",
-                    "User-Agent":"Chrome/61.0.3163.100 Safari/537.36",
-                    "Referer": "http://localhost:8000/",
-                    "Accept-Encoding": "gzip, deflate, br"
-                ])
-            
+                    method: "GET",
+                    resource: "/Tests/",
+                    httpVersion: Optional("HTTP/1.1"),
+                    headers: [
+                        "Host": "localhost:8000",
+                        "Accept": "text/html",
+                        "User-Agent": "Chrome/61.0.3163.100 Safari/537.36",
+                        "Referer": "http://localhost:8000/",
+                        "Accept-Encoding": "gzip, deflate, br"
+                    ])
+
             do {
                 let parsedRequest = try RequestParser.parse(rawRequest: rawRequest)
                 expect(parsedRequest).to(equal(expected))
+            } catch {
             }
-            catch {
+
         }
-        
     }
-}
 }

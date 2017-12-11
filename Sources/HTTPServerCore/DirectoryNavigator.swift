@@ -8,7 +8,7 @@
 import Foundation
 
 public enum DirectoryNavigatorError: Error {
-    case pathDoesNotExist
+    case pathDoesNotExist(path: String)
 }
 
 public  final class DirectoryNavigator {
@@ -21,13 +21,17 @@ public  final class DirectoryNavigator {
         self.root = fileManager.currentDirectoryPath
     }
     
-    public func listFiles(atPath: String) throws -> [String]{
+    public func listFilesAndFileTypes(atPath: String) throws -> [(String, String)]{
+        var itemNamesWithRelativePath: [String]
         do {
-            return try self.fileManager.contentsOfDirectory(atPath: "\(root)\(atPath)")
+            let itemNames = try self.fileManager.contentsOfDirectory(atPath: "\(root)\(atPath)").sorted(by: <)
+            itemNamesWithRelativePath = itemNames.map{"\(root)\(atPath)/\($0)"}
         }
         catch  {
-            throw DirectoryNavigatorError.pathDoesNotExist
+            throw DirectoryNavigatorError.pathDoesNotExist(path: atPath)
         }
+
+        return try itemNamesWithRelativePath.map {($0, try self.fileType(atPath: $0))}
     }
     
     public func fileExists(atPath: String) -> Bool {
@@ -36,7 +40,7 @@ public  final class DirectoryNavigator {
     
     public func fileType(atPath: String) throws -> String {
         guard  fileExists(atPath: atPath) else {
-            throw DirectoryNavigatorError.pathDoesNotExist
+            throw DirectoryNavigatorError.pathDoesNotExist(path:atPath)
         }
          return try fileManager.attributesOfItem(atPath: atPath)[FileAttributeKey("NSFileType")] as! String
     
@@ -44,7 +48,7 @@ public  final class DirectoryNavigator {
     
     public func readFileContents(atPath: String) throws -> Data? {
         guard  fileExists(atPath: atPath) else {
-            throw DirectoryNavigatorError.pathDoesNotExist
+            throw DirectoryNavigatorError.pathDoesNotExist(path: atPath)
         }
     
         let file: FileHandle? = FileHandle(forReadingAtPath: atPath)

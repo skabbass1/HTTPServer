@@ -12,37 +12,44 @@ import HTTPServerCore
 
 class DirectoryNavigatorSpec: QuickSpec {
     override func spec() {
-        describe("listFiles method"){
-            it("throws when invalid path provided"){
+        describe("listFiles method") {
+            it("throws when invalid path provided") {
                 let navigator = DirectoryNavigator()
-                expect {try navigator.listFiles(atPath: "does_not_exist")}.to(throwError(DirectoryNavigatorError.pathDoesNotExist))
+                expect {
+                    try navigator.listFilesAndFileTypes(atPath: "does_not_exist")
+                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(path: "does_not_exist")))
             }
         }
-        describe("fileType method"){
-            it("throws when invalid path provided"){
+        describe("fileType method") {
+            it("throws when invalid path provided") {
                 let navigator = DirectoryNavigator()
-                expect {try navigator.fileType(atPath: "does_not_exist")}.to(throwError(DirectoryNavigatorError.pathDoesNotExist))
+                expect {
+                    try navigator.fileType(atPath: "does_not_exist")
+                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(path: "does_not_exist")))
             }
         }
-        describe("readFileContents method"){
-            it("throws when invalid path provided"){
+        describe("readFileContents method") {
+            it("throws when invalid path provided") {
                 let navigator = DirectoryNavigator()
-                expect {try navigator.readFileContents(atPath: "does_not_exist")}.to(throwError(DirectoryNavigatorError.pathDoesNotExist))
+                expect {
+                    try navigator.readFileContents(atPath: "does_not_exist")
+                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(path: "does_not_exist")))
             }
-            it("returns nil when path is a directory"){
-                
+            it("returns nil when path is a directory") {
+
                 let fileManager = FileManager()
                 let navigator = DirectoryNavigator()
-                do{
-                    try fileManager.createDirectory(atPath:"tmp_dir", withIntermediateDirectories: true, attributes: nil)
-                    expect {try navigator.readFileContents(atPath: "tmp_dir")}.to(beNil())
+                do {
+                    try fileManager.createDirectory(atPath: "tmp_dir", withIntermediateDirectories: true, attributes: nil)
+                    expect {
+                        try navigator.readFileContents(atPath: "tmp_dir")
+                    }.to(beNil())
                     try fileManager.removeItem(atPath: "tmp_dir")
-                    
-                }
-                catch {
+
+                } catch {
                     print(error)
                 }
-                
+
             }
         }
     }
