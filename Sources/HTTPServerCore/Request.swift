@@ -29,7 +29,6 @@ public struct Request {
 }
 
 extension Request: Equatable {
-    
     public static func == (lhs: Request, rhs: Request) -> Bool {
         return
             lhs.method == rhs.method &&

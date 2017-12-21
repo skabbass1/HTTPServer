@@ -66,11 +66,11 @@ public final class RequestHandler {
 
     func resourceNotFound(request: Request) -> Response {
         return Response(
-                httpVersion: "",
-                statusCode: 1,
-                statusPhrase: "",
-                headers: ["key": ""],
-                body:""
+                httpVersion: request.httpVersion,
+                statusCode: 404,
+                statusPhrase: "Not Found",
+                headers: [:],
+                body:"Resource \(request.resource) does not exist"
         )
     }
 
