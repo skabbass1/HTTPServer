@@ -36,3 +36,14 @@ public struct Response {
     }
 
 }
+
+extension Response: Equatable {
+    public static func == (lhs: Response, rhs: Response) -> Bool {
+        return
+            lhs.httpVersion == rhs.httpVersion &&
+            lhs.statusCode == rhs.statusCode &&
+            lhs.statusPhrase == rhs.statusPhrase &&
+            lhs.headers == rhs.headers &&
+            lhs.body! == rhs.body!
+    }
+}

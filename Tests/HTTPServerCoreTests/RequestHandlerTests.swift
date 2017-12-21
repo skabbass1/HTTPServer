@@ -23,15 +23,18 @@ class RequestHandlerSpec: QuickSpec {
                     headers: [
                         "Host": "localhost:8000",
                         "Accept": "text/html",
-                        "User-Agent": "Chrome/61.0.3163.100 Safari/537.36",
-                        "Referer": "http://localhost:8000/",
-                        "Accept-Encoding": "gzip, deflate, br"
                     ])
 
-            let expectedResponse = "HTTP/1.1 404 Not Found\r\n\r\nResource /Does/Not/Exist does not exist"
+            let expectedResponse = Response(
+                    httpVersion: "HTTP/1.1",
+                    statusCode: 404,
+                    statusPhrase: "Not Found",
+                    headers: [ "Host": "localhost:8000", "Accept": "text/html",],
+                    body: Optional("Resource /Does/Not/Exist does not exist")
+            )
             let requestHandler = RequestHandler()
             let response = requestHandler.handleRequest(request: incommingRequest)
-            expect(response.stringify()).to(equal(expectedResponse))
+            expect(response).to(equal(expectedResponse))
         }
     }
 }

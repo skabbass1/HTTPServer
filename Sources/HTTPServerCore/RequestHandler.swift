@@ -69,7 +69,7 @@ public final class RequestHandler {
                 httpVersion: request.httpVersion,
                 statusCode: 404,
                 statusPhrase: "Not Found",
-                headers: [:],
+                headers: request.headers,
                 body:"Resource \(request.resource) does not exist"
         )
     }
