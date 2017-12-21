@@ -11,13 +11,13 @@ import Foundation
 public struct Request {
     let method: String
     let resource: String
-    let httpVersion: String?
+    let httpVersion: String
     let headers: [String: String]
     
     public init(
         method: String,
         resource: String,
-        httpVersion: String?,
+        httpVersion: String,
         headers: [String: String]
         ){
         

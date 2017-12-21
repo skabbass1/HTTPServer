@@ -19,10 +19,17 @@ public final class RequestHandler {
             return handleGet(request: request)
 
         case "POST":
-            return handlePost(request: request)
+            return handlePost(request: request)!
 
         default:
-            return Response()
+            return Response(
+                    httpVersion: "",
+                    statusCode: 1,
+                    statusPhrase: "",
+                    headers: ["key": ""],
+                    body:""
+            )
+
         }
     }
 
@@ -33,11 +40,20 @@ public final class RequestHandler {
             self.tryFetchFile,
         ]
 
-        return Response()
+        for resolver in resourceResolvers {
+            let response = resolver(request.resource)
+            if response != nil {
+                return response!
+            }
+
+        }
+
+        return resourceNotFound(request: request)
+
     }
 
-    func handlePost(request: Request) -> Response {
-        return Response()
+    func handlePost(request: Request) -> Response? {
+        return nil
     }
 
     func tryFetchDirectory(atPath: String) -> Response? {
@@ -48,8 +64,14 @@ public final class RequestHandler {
         return nil
     }
 
-    func resourceNotFound() -> Response {
-        return Response()
+    func resourceNotFound(request: Request) -> Response {
+        return Response(
+                httpVersion: "",
+                statusCode: 1,
+                statusPhrase: "",
+                headers: ["key": ""],
+                body:""
+        )
     }
 
 }

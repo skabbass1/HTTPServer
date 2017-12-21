@@ -35,7 +35,7 @@ public final class RequestParser {
         
     }
     
-    static func parseResourceLine(line: String) throws -> (method: String, resource: String, version:String?) {
+    static func parseResourceLine(line: String) throws -> (method: String, resource: String, version:String) {
         let words = line.components(separatedBy: " ").filter {$0 != ""}
         guard (words.count >= 2 && words.count <= 3) else {
             throw RequestParsingError.badRequestSyntax
@@ -43,7 +43,7 @@ public final class RequestParser {
         return (
             method: words[0],
             resource: words[1],
-            version: 2 < words.count ? words[2]: nil
+            version: words[2]
         )
     }
     

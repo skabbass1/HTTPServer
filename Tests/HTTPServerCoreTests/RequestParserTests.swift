@@ -40,7 +40,7 @@ class RequestParserSpec: QuickSpec {
             let expected = Request(
                     method: "GET",
                     resource: "/Tests/",
-                    httpVersion: Optional("HTTP/1.1"),
+                    httpVersion: "HTTP/1.1",
                     headers: [
                         "Host": "localhost:8000",
                         "Accept": "text/html",
