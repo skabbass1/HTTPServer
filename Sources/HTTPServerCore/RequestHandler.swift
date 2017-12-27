@@ -76,7 +76,21 @@ public final class RequestHandler {
     }
 
     func tryFetchFile(request: Request) -> Response? {
-        return nil
+        do {
+            let data = try self.directoryNavigator.readFileContents(atPath: request.resource)
+            return Response(
+                    httpVersion: request.httpVersion,
+                    statusCode: 200,
+                    statusPhrase: "OK",
+                    headers: request.headers,
+                    body: String(data: data!, encoding: .utf8)
+            )
+
+
+        } catch {
+            print(error)
+            return nil
+        }
     }
 
     func resourceNotFound(request: Request) -> Response {

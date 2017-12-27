@@ -17,7 +17,7 @@ class DirectoryNavigatorSpec: QuickSpec {
                 let navigator = DirectoryNavigator()
                 expect {
                     try navigator.listFilesAndFileTypes(atPath: "does_not_exist")
-                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(path: "does_not_exist")))
+                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(atPath: "does_not_exist")))
             }
         }
         describe("fileType method") {
@@ -25,7 +25,7 @@ class DirectoryNavigatorSpec: QuickSpec {
                 let navigator = DirectoryNavigator()
                 expect {
                     try navigator.fileType(atPath: "does_not_exist")
-                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(path: "does_not_exist")))
+                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(atPath: "does_not_exist")))
             }
         }
         describe("readFileContents method") {
@@ -33,7 +33,7 @@ class DirectoryNavigatorSpec: QuickSpec {
                 let navigator = DirectoryNavigator()
                 expect {
                     try navigator.readFileContents(atPath: "does_not_exist")
-                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(path: "does_not_exist")))
+                }.to(throwError(DirectoryNavigatorError.pathDoesNotExist(atPath: "does_not_exist")))
             }
             it("returns nil when path is a directory") {
 
