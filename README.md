@@ -1,3 +1,3 @@
 # HTTPServer
 
-A description of this package.
+A  bare bones HTTP server to serve a directory
