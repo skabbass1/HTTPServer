@@ -10,6 +10,7 @@ public final class RequestHandler {
 
     public init() {
         self.directoryNavigator = DirectoryNavigator()
+
     }
 
     public func handleRequest(request: Request) -> Response {
@@ -27,7 +28,7 @@ public final class RequestHandler {
                     statusCode: 1,
                     statusPhrase: "",
                     headers: ["key": ""],
-                    body:""
+                    body: ""
             )
 
         }
@@ -41,7 +42,7 @@ public final class RequestHandler {
         ]
 
         for resolver in resourceResolvers {
-            let response = resolver(request.resource)
+            let response = resolver(request)
             if response != nil {
                 return response!
             }
@@ -56,11 +57,25 @@ public final class RequestHandler {
         return nil
     }
 
-    func tryFetchDirectory(atPath: String) -> Response? {
-        return nil
+    func tryFetchDirectory(request: Request) -> Response? {
+        do {
+            let filesAndFileTypes = try self.directoryNavigator.listFilesAndFileTypes(atPath: request.resource)
+            return Response(
+                    httpVersion: request.httpVersion,
+                    statusCode: 200,
+                    statusPhrase: "OK",
+                    headers: request.headers,
+                    body: HTMLBuilder.directoryListingToHTML(
+                            resourcePath: request.resource,
+                            filenamesAndType: filesAndFileTypes
+                    )
+            )
+        } catch {
+            return nil
+        }
     }
 
-    func tryFetchFile(atPath: String) -> Response? {
+    func tryFetchFile(request: Request) -> Response? {
         return nil
     }
 
@@ -70,7 +85,7 @@ public final class RequestHandler {
                 statusCode: 404,
                 statusPhrase: "Not Found",
                 headers: request.headers,
-                body:"Resource \(request.resource) does not exist"
+                body: "Resource \(request.resource) does not exist"
         )
     }
 

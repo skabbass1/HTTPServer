@@ -21,8 +21,8 @@ public final class HttpServer {
             let text = String(data: buffer, encoding: .utf8)!
             if (bytesRead > 0) {
                 let parsedRequest = try RequestParser.parse(rawRequest: text)
-                let _ = requestHandler.handleRequest(request: parsedRequest)
-                print(parsedRequest)
+                let  response = requestHandler.handleRequest(request: parsedRequest)
+                try incommingSocket.write(from: response.stringify())
             }
 
         } while true

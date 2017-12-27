@@ -21,17 +21,17 @@ public  final class DirectoryNavigator {
         self.root = fileManager.currentDirectoryPath
     }
     
-    public func listFilesAndFileTypes(atPath: String) throws -> [(String, String)]{
-        var itemNamesWithRelativePath: [String]
+    public func listFilesAndFileTypes(atPath: String) throws -> [(name: String, path: String, type: String)]{
+        var itemNames: [String]
         do {
-            let itemNames = try self.fileManager.contentsOfDirectory(atPath: "\(root)\(atPath)").sorted(by: <)
-            itemNamesWithRelativePath = itemNames.map{"\(root)\(atPath)/\($0)"}
+            itemNames = try self.fileManager.contentsOfDirectory(atPath: "\(root)\(atPath)").sorted(by: <)
         }
         catch  {
             throw DirectoryNavigatorError.pathDoesNotExist(path: atPath)
         }
 
-        return try itemNamesWithRelativePath.map {($0, try self.fileType(atPath: $0))}
+        let path = atPath == "/" ? "": atPath
+        return try itemNames.map {($0, "\(path)/\($0)",  try self.fileType(atPath: "\(root)\(path)/\($0)"))}
     }
     
     public func fileExists(atPath: String) -> Bool {
